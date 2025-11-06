@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Session.Models.tblSanPham>
+
+@{
+    ViewBag.Title = "DsSanPham";
+    var gh = ViewBag.GioHang as Session.Models.GioHang;
+    var kh = ViewBag.KhachHang as Session.Models.tblKhachHang;
+}
+
+<h2>DsSanPham</h2>
+
+
+
+<div class="row">
+    @foreach (var s in Model)
+    {
+        <div class="col-lg-3 card mr-2 mt-2 text-center">
+            <div class="card-product">
+                <img src="@Url.Content("~/Hinh/" + s.HinhAnh)"
+                     class="card-img-top mt-2"
+                     style="width:250px; height:320px;" />
+                <div class="card-body">
+                    <h5>@s.TenSP</h5>
+                    <p><b>@String.Format("{0:N0}", s.DonGia) VNĐ</b></p>
+                    @Html.ActionLink("Chon mua", "ThemMatHang", "DatHang", new { msp = s.MaSanPham }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    }
+</div>

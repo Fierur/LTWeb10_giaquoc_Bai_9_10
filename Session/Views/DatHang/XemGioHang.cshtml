@@ -1,0 +1,62 @@
+﻿@model Session.Models.GioHang
+@{
+    ViewBag.Title = "CartItem";
+}
+
+<h2 class="text-center">Thong tin gio hang</h2>
+
+@if (Model == null || Model.SoMatHang() == 0)
+{
+    <div class="alert alert-info text-center">
+        <p>Gio hang trong</p>
+        @Html.ActionLink("Tiep tuc mua hang", "DsSanPham", "Home", null, new { @class = "btn btn-primary" })
+    </div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Ma sach</th>
+                <th>Ten sach</th>
+                <th>Anh</th>
+                <th>So luong</th>
+                <th>Don gia</th>
+                <th>Thanh tien</th>
+                <th>Xoa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.lst)
+            {
+                <tr>
+                    <td>@item.iMaSach</td>
+                    <td>@item.sTenSach</td>
+                    <td><img src="@Url.Content("~/Hinh/" + item.sAnhBia)" width="50" /></td>
+                    <td>
+                        <form method="post" action="@Url.Action("Sua", "DatHang")" style="display: inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="msp" value="@item.iMaSach" />
+                            <input type="number" name="sl" value="@item.iSoLuong" min="1" style="width: 70px;" class="form-control d-inline" />
+                            <button type="submit" class="btn btn-sm btn-warning">Cap nhat</button>
+                        </form>
+                    </td>
+                    <td>@String.Format("{0:N0}", item.dDonGia) VNĐ</td>
+                    <td>@String.Format("{0:N0}", item.ThanhTien) VNĐ</td>
+                    <td>@Html.ActionLink("Xoa", "Xoa", "DatHang", new { msp = item.iMaSach }, new { @class = "btn btn-danger btn-sm", onclick = "return confirm('Xac nhan xoa?')" })</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr class="table-info">
+                <td colspan="3"><strong>Tổng số lượng: @Model.TongSLHang()</strong></td>
+                <td colspan="4"><strong>Tổng tiền: @String.Format("{0:N0}", Model.TongThanhTien()) VNĐ</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="text-center mt-3">
+        @Html.ActionLink("Tiep tuc mua", "DsSanPham", "Home", null, new { @class = "btn btn-secondary btn-lg" })
+        @Html.ActionLink("Dong y dat hang", "TaoDonDatHang", "DatHang", null, new { @class = "btn btn-success btn-lg" })
+    </div>
+}

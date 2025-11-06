@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@if (ViewBag.khachhang != null)
+{
+    var kh = ViewBag.khachhang as Session.Models.tblKhachHang;
+    <div class="card">
+        <h4>Thong tin tai khoan</h4>
+        <span>Ma kh: <b>@kh.MaKhachHang</b></span>
+        <span>Ten kh: <b>@kh.TenKH</b></span>
+        <span>Dia chi: <b>@kh.DiaChi</b></span>
+        <span>So dien thoai: <b>@kh.SoDienThoai</b></span>
+    </div>
+    @Html.ActionLink("Danh sach san pham", "DsSanPham", "Home", null, new { @class = "text-decoration-none fw-bold" })
+
+}

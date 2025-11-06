@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Đăng Nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="mb-0">Đăng Nhập</h3>
+            </div>
+            <div class="card-body p-4">
+                @if (!string.IsNullOrEmpty(ViewBag.ThongBao as string))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ThongBao
+                    </div>
+                }
+
+                @using (Html.BeginForm("DangNhap", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tên đăng nhập:</label>
+                        <input type="text"
+                               name="txtName"
+                               class="form-control"
+                               placeholder="Nhập tên đăng nhập"
+                               required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mật khẩu:</label>
+                        <input type="password"
+                               name="txtPass"
+                               class="form-control"
+                               placeholder="Nhập mật khẩu"
+                               required />
+                    </div>
+
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Đăng nhập
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
